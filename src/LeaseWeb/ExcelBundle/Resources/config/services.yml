@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    public: true
+    autoconfigure: true
+
+  excel_parser_service:
+    class: LeaseWeb\ExcelBundle\Services\ExcelParserService
+    public: true
+  
+  LeaseWeb\ExcelBundle\Services\ExcelParserService: ~

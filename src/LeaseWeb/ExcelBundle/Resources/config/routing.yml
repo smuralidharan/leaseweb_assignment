@@ -1,0 +1,3 @@
+lease_web_excel_homepage:
+    path:     /
+    defaults: { _controller: LeaseWebExcelBundle:Default:index }

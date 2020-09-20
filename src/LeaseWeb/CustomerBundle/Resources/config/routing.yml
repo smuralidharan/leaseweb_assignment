@@ -1,0 +1,3 @@
+lease_web_customer_homepage:
+    path:     /store
+    defaults: { _controller: LeaseWebCustomerBundle:Customer:index }

@@ -24,6 +24,7 @@
 
   public function register(Request $request, UserPasswordEncoderInterface $encoder)
   {
+    echo "in"; die;
    $em = $this->getDoctrine()->getManager();
    $request = $this->transformJsonBody($request);
    $username = $request->get('username');

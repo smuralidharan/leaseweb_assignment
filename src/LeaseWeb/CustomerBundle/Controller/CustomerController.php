@@ -104,7 +104,7 @@ class CustomerController extends Controller
     	if(!empty($searchData))
     	{
     		$url = $request->getSchemeAndHttpHost()."/register";
-    		$client = new \GuzzleHttp\Client(['verify' => false ]);
+    		$client = new \GuzzleHttp\Client();
     		$requestData = ["username" => "LeaseWeb", "password" => "123456"];
     		$response = $client->post($url, [ 'body' => json_encode($requestData) ]);
 

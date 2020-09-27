@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new LeaseWeb\CustomerBundle\LeaseWebCustomerBundle(),
             new \Onurb\Bundle\ExcelBundle\OnurbExcelBundle(),
             new LeaseWeb\ExcelBundle\LeaseWebExcelBundle(),
+            new LeaseWeb\ApiBundle\LeaseWebApiBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

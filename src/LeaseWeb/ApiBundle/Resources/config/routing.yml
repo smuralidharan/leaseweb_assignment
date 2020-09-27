@@ -1,0 +1,12 @@
+lease_web_api_homepage:
+    path:     /api/store
+    defaults: { _controller: LeaseWebApiBundle:Api:index }
+
+lease_web_api_register:
+  path: /register
+  controller: LeaseWebApiBundle:Api:register
+  methods: POST
+
+lease_web_login_check:
+  path: /api/login_check
+  controller: LeaseWebApiBundle:Auth:getTokenUser

@@ -10,7 +10,7 @@ class ExcelParserService extends Controller
 
 	public function fetchLocationList($spreadsheet)
 	{
-		$data = $this->createDataFromSpreadsheet($spreadsheet);
+		return $this->createDataFromSpreadsheet($spreadsheet);
 	}
 
 	protected function createDataFromSpreadsheet($spreadsheet)

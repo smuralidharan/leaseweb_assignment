@@ -1,3 +1,7 @@
 lease_web_customer_homepage:
     path:     /store
     defaults: { _controller: LeaseWebCustomerBundle:Customer:index }
+
+lease_web_store_details:
+    path:     /store/details
+    defaults: { _controller: LeaseWebCustomerBundle:Customer:storeInfo }  

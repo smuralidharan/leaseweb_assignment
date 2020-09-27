@@ -1,3 +1,7 @@
+lease_web_api:
+    resource: "@LeaseWebApiBundle/Resources/config/routing.yml"
+    prefix:   /
+
 lease_web_excel:
     resource: "@LeaseWebExcelBundle/Resources/config/routing.yml"
     prefix:   /

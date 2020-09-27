@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use LeaseWeb\ExcelBundle\Services\ExcelParserService;
+use GuzzleHttp\Client;
+
 
 
 class CustomerController extends Controller
@@ -22,7 +24,21 @@ class CustomerController extends Controller
     {
     	$reader = $this->get('phpspreadsheet')->createReader('Xlsx');
     	$spreadsheet = $reader->load("LeaseWeb.xlsx");
-    	$locationList = $this->excelParserService->fetchLocationList($spreadsheet);
+    	$excelData = $this->excelParserService->fetchLocationList($spreadsheet);
+    	$locations = [];
+    	if(!empty($excelData['Sheet2']))
+    	{
+    		foreach ($excelData['Sheet2'] as $key => $value) {
+    			if(trim($key) == 'columnValues')
+    			{
+    				foreach ($value as $colKey => $colValue) {
+    					$locations[] = $colValue[3];
+    				}
+    			}
+    		}
+    	}
+    	$locations = array_combine($locations, $locations);
+    	$locations = ['Select' => ""] + $locations;
     	$form = $this->createFormBuilder()
 	        ->add('range', ChoiceType::class, [
 	        	'required' => false,
@@ -68,25 +84,32 @@ class CustomerController extends Controller
 	        ])
 	        ->add('location', ChoiceType::class, [
 	        	'required' => false,
-	        	'choices'  => [
-	        		'Select' => "",
-			        'AMSTERDAM' => "AMSTERDAM",
-			    ],
+	        	'choices'  => $locations,
 	        ])
 	        ->add('Search', SubmitType::class, [
-    			'attr' => ['class' => 'save'],
+    			'attr' => ['class' => 'btn btn-primary btn-search'],
 			])
 	        ->getForm();
 	    $form->handleRequest($request);
-
-	    if ($form->isSubmitted() && $form->isValid()) {
-	        // data is an array with "name", "email", and "message" keys
-	        $data = $form->getData();
-	        echo "<pre>";
-	        print_r($data);
-    	}
+	    
         return $this->render('@LeaseWebCustomerBundle/Default/index.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+
+    public function storeInfoAction(Request $request)
+    {
+    	$searchData = $request->request->all();
+    	if(!empty($searchData))
+    	{
+    		$url = $request->getSchemeAndHttpHost()."/register";
+    		$client = new \GuzzleHttp\Client(['verify' => false ]);
+    		$requestData = ["username" => "LeaseWeb", "password" => "123456"];
+    		$response = $client->post($url, [ 'body' => json_encode($requestData) ]);
+
+			echo $response->getContent(); // 200
+			die;
+    	}
     }
 }
